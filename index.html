@@ -135,19 +135,28 @@
             setTimeout(efekKetik, 1000);
         }, 2000); 
     });
-       @media screen and (max-width: 600px) {
+      @media screen and (max-width: 600px) {
     h1 {
-        font-size: 26px !important;
-        line-height: 1.3;
-        padding: 0 10px;
+        font-size: 22px !important; /* Dikecilkan lagi supaya muat dalam satu baris */
+        line-height: 1.2;
+        padding: 0 10px !important;
+        width: 90%;                 /* Membatasi lebar teks agar tidak menabrak pinggir */
+        word-wrap: break-word;      /* Memaksa kata pecah jika terlalu panjang */
+        margin: 0 auto !important;  /* Memastikan teks tetap di tengah */
     }
+    
     #typing-text {
         font-size: 14px !important;
+        white-space: normal !important; /* Mengizinkan teks mengetik turun ke baris baru jika kepanjangan */
+        display: block;
+        padding: 0 10px;
     }
+
     p {
-        font-size: 14px;
-        margin-top: 10vh !important;
+        font-size: 13px !important;
+        margin-top: 5vh !important;
     }
+}
 </script>
 </body>
 </html>
