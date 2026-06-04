@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* ✨ EFEK LIGHTING BACKGROUND ✨ */
+        /* LIGHTING BACKGROUND EFFECTS */
         body::before {
             content: '';
             position: fixed;
@@ -48,7 +48,7 @@
             z-index: -1;
         }
 
-        /* 🎭 TRANSISI TIRAI (OVERLAY) 🎭 */
+        /* PAGE TRANSITION OVERLAY */
         .transition-overlay {
             position: fixed;
             top: 0;
@@ -90,7 +90,14 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* ====== LAYOUT MANAGER (FLEXBOX) ====== */
+        /* ====== LOGIKAL TOGGLE BAHASA (DESKTOP & MOBILE) ====== */
+        .lang-id { display: none !important; }
+        .lang-en { display: block !important; }
+        
+        body.lang-indo .lang-id { display: block !important; }
+        body.lang-indo .lang-en { display: none !important; }
+
+        /* ====== LAYOUT MANAGER DESKTOP ====== */
         .main-container {
             display: flex;
             justify-content: center;
@@ -101,7 +108,6 @@
             padding: 20px;
         }
 
-        /* ====== KONTEN KIRI (TEKS IDENTITAS & NAVIGASI) ====== */
         .about-content {
             flex: 1;
             min-width: 320px;
@@ -141,7 +147,6 @@
             margin-bottom: 20px;
         }
 
-        /* Tombol Navigasi Sejajar */
         .btn-wrapper {
             display: flex;
             gap: 20px;
@@ -210,13 +215,7 @@
             color: #ffffff;
         }
 
-        .lang-id { display: none; }
-        .lang-en { display: block; }
-        body.lang-indo .lang-id { display: block; }
-        body.lang-indo .lang-en { display: none; }
-
-
-        /* ====== KONTEN KANAN (KARTU FOTO & FAVORITES) ====== */
+        /* CARD STYLE AREA */
         .card-area {
             display: flex;
             flex-direction: column;
@@ -283,8 +282,7 @@
             opacity: 0.75;        
         }
 
-
-        /* ====== ❤️ STYLE TOMBOL FAVORITE (UIVERSE) ====== */
+        /* FAVORITE BUTTON STYLE */
         label.fav-container {
             background-color: white;
             display: flex;
@@ -343,28 +341,26 @@
             transform: translate(0px,0%); opacity: 1;
         }
 
-        /* Sembunyikan elemen duplikat mobile secara default di desktop */
+        /* Hidden Mobile Container on Desktop */
         .mobile-only-layout {
             display: none;
         }
 
 
         /* ===================================================
-           ⚡ MEDIA QUERY BERDASARKAN KETENTUAN FIGMA KAMU ⚡
+           ⚡ FIX MEDIA QUERY UNTUK MOBILE LAYOUT (HP) ⚡
            =================================================== */
         @media screen and (max-width: 768px) {
             body {
                 padding: 20px 10px;
             }
 
-            /* Sembunyikan kontainer flex desktop total agar tidak bentrok */
             .main-container {
-                display: none;
+                display: none !important;
             }
 
-            /* Aktifkan struktur linier murni khusus HP sesuai alur mockup figma */
             .mobile-only-layout {
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
@@ -373,22 +369,27 @@
                 box-sizing: border-box;
             }
 
-            /* 1. Atur Ukuran Kartu Foto di HP */
+            /* 1. Card Size on Mobile */
             .mobile-only-layout .flip-card {
                 width: 240px; 
                 height: 310px;
                 margin: 0 auto 15px auto;
             }
 
-            /* 2. Atur Tombol Favorites Putih tepat di bawah foto */
+            /* 2. Favorites Button directly underneath photo */
             .mobile-only-layout label.fav-container {
                 margin: 5px auto 25px auto;
             }
 
-            /* 3. Atur Teks Nama 'Ican' */
+            /* 3. Badge text */
+            .mobile-only-layout .badge {
+                margin: 0 auto 10px auto;
+            }
+
+            /* 4. Name 'Ican' Header */
             .mobile-only-layout h2 {
                 font-size: 2.5em;
-                margin: 5px 0 10px 0;
+                margin: 5px 0 15px 0;
                 font-weight: 700;
                 background: linear-gradient(to right, #ffffff, #a855f7);
                 -webkit-background-clip: text;
@@ -396,40 +397,44 @@
                 -webkit-text-fill-color: transparent;
             }
 
-            /* 4. Atur Paragraf Deskripsi Kecil Rata Tengah */
+            /* 5. Description Paragraph Formatting */
             .mobile-only-layout p {
                 font-size: 11px !important;
-                line-height: 1.6 !important;
+                line-height: 1.7 !important;
                 text-align: center;
                 max-width: 320px;
                 color: #9ca3af;
-                margin: 0 auto 20px auto;
+                margin: 0 auto 15px auto;
             }
 
-            /* 5. Atur Tiga Tombol Navigasi SEJAJAR KE SAMPING (Row) */
+            /* 6. Buttons Rows Alignment - STAYS SIDE BY SIDE */
             .mobile-only-layout .btn-wrapper {
-                display: flex;
-                flex-direction: row; /* Tetap sejajar horizontal kesamping */
-                justify-content: center;
-                flex-wrap: nowrap;
-                gap: 8px;
-                margin: 10px auto;
+                display: flex !important;
+                flex-direction: row !important; 
+                justify-content: center !important;
+                align-items: center !important;
+                flex-wrap: nowrap !important;
+                gap: 8px !important;
+                margin: 20px auto !important;
+                width: 100%;
             }
 
             .mobile-only-layout .btn-home {
                 padding: 10px 14px;
+                flex-shrink: 0;
             }
 
             .mobile-only-layout .btn-cv {
-                padding: 10px 15px;
-                font-size: 0.8em;
-                white-space: nowrap; /* Mencegah teks turun baris baru */
+                padding: 10px 14px;
+                font-size: 0.78em;
+                white-space: nowrap; 
+                flex-shrink: 0;
             }
 
-            /* 6. Tombol EN/ID Paling Bawah */
+            /* 7. Language Switcher at the very bottom */
             .mobile-only-layout .lang-container {
                 justify-content: center;
-                margin-top: 15px;
+                margin-top: 10px;
             }
         }
     </style>
@@ -440,8 +445,10 @@
 
     <h1 class="page-title">About Me</h1>
 
+    <!-- ==========================================
+         💻 DESKTOP LAYOUT
+         ========================================== -->
     <div class="main-container">
-        
         <div class="about-content">
             <span class="badge">Personal Portfolio</span>
             <h2>Ican</h2>
@@ -492,8 +499,12 @@
     </div>
 
 
+    <!-- ==========================================
+         📲 MOBILE LAYOUT (FIXED LOGIC)
+         ========================================== -->
     <div class="mobile-only-layout">
         
+        <!-- 1. Foto -->
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -505,6 +516,7 @@
             </div>
         </div>
 
+        <!-- 2. Tombol Fav Putih -->
         <input type="checkbox" id="favorite-mobile" class="fav-input" name="favorite-checkbox">
         <label for="favorite-mobile" class="fav-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -514,10 +526,15 @@
             </div>
         </label>
 
+        <!-- 3. Badge -->
+        <span class="badge">Personal Portfolio</span>
+
+        <!-- 4. Nama -->
         <h2>Ican</h2>
 
+        <!-- 5. Teks Deskripsi (Hanya Muncul Satu Sesuai State Toggle) -->
         <div class="lang-en">
-            <p>Hello! I am Muhammad Ikhsan Akbar, a Management Informatics student at Politeknik Negeri Sriwijaya. Since my background is in IT,  I’m dedicated to leveling up my skills in programming, business analysis, and English.</p>
+            <p>Hello! I am Muhammad Ikhsan Akbar, a Management Informatics student at Politeknik Negeri Sriwijaya. Since my background is in IT, I’m dedicated to leveling up my skills in programming, business analysis, and English.</p>
             <p>This website was built as my first platform to put what I've learned into practice. Moving forward, I look forward to growing further, boosting my work efficiency, and honing my skills for the future.</p>
         </div>
         <div class="lang-id">
@@ -525,6 +542,7 @@
             <p>Website ini dibuat sebagai wadah perdana untuk mengaplikasikan hal yang saya pelajari dalam beberapa waktu. Seiring berjalannya waktu, saya berharap dapat terus berkembang, meningkatkan efisiensi kerja, dan mengasah kemampuan saya untuk ke depannya.</p>
         </div>
 
+        <!-- 6. Tiga Tombol Sejajar Menyamping -->
         <div class="btn-wrapper">
             <a href="index.html" class="btn-home">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -533,6 +551,7 @@
             <a href="experience.html" class="btn-cv">Explore My Experience</a>
         </div>
 
+        <!-- 7. Tombol Switch Bahasa -->
         <div class="lang-container">
             <button class="btn-lang classLangToggle">EN / ID</button>
         </div>
@@ -540,7 +559,7 @@
     </div>
 
     <script>
-        // Mengunci fungsi switch bahasa agar bekerja serentak di desktop maupun mobile
+        // Logika toggle bahasa global yang mencakup wrapper mobile & desktop sekaligus
         const toggles = document.querySelectorAll('.classLangToggle');
         toggles.forEach(btn => {
             btn.addEventListener('click', function() {
