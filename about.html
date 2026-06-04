@@ -334,11 +334,11 @@
 
 
         /* ===================================================
-           ⚡ FIX TOTAL MEDIA QUERY MOBILE LAYOUT (HP) ⚡
+           ⚡ MOBILE MEDIA QUERY (100% PRESTISE MATCH FIGMA) ⚡
            =================================================== */
         @media screen and (max-width: 768px) {
             body {
-                padding: 25px 24px; 
+                padding: 20px 16px !important; 
             }
 
             .main-container {
@@ -347,109 +347,146 @@
 
             .mobile-only-layout {
                 display: flex !important;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                max-width: 360px; 
-                margin: 0 auto;
-                box-sizing: border-box;
-            }
-
-            /* 1. Ukuran Kartu Foto Mini & Presisi */
-            .mobile-only-layout .flip-card {
-                width: 220px; 
-                height: 280px;
-                margin: 0 auto 15px auto;
-            }
-
-            /* 2. Tombol Favorites */
-            .mobile-only-layout label.fav-container {
-                padding: 8px 20px;
-                margin: 0 auto 30px auto;
-            }
-            
-            .mobile-only-layout label.fav-container .action span {
-                font-size: 0.82em;
-            }
-
-            /* 3. Nama Ican Rata Tengah */
-            .mobile-only-layout h2 {
-                font-size: 2.4em;
-                margin: 0 0 15px 0;
-                font-weight: 700;
-                text-align: center;
-                width: 100%;
-                background: linear-gradient(to right, #ffffff, #a855f7);
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            /* 4. FIX PARAGRAF: RATA KANAN-KIRI (JUSTIFY) & RAPID COK SESUAI IMAGE_25D06D.PNG */
-            .mobile-only-layout p {
-                font-size: 11.5px !important;
-                line-height: 1.8 !important;
-                text-align: justify !important; /* Membuat paragraf rata kanan-kiri rapi kotak */
-                color: #9ca3af;
-                margin: 0 0 12px 0 !important; /* Jarak pas antar paragraf */
-                letter-spacing: 0.2px;
-                width: 100%;
-            }
-
-            /* 5. Tiga Navigasi Sejajar */
-            .mobile-only-layout .btn-wrapper {
-                display: flex !important;
-                flex-direction: row !important; 
-                justify-content: flex-start !important; 
+                flex-direction: column !important;
                 align-items: center !important;
-                flex-wrap: nowrap !important;
-                gap: 8px !important;
-                margin: 25px 0 12px 0 !important;
-                width: 100%; 
+                width: 100% !important;
+                max-width: 360px !important; 
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
             }
 
-            /* Tombol Home Lingkar Hitam */
+            /* Judul Atas */
+            .mobile-only-layout .mobile-page-title {
+                font-size: 1.5em !important;
+                font-weight: 600 !important;
+                color: #ffffff !important;
+                margin: 10px 0 20px 0 !important;
+                text-align: center !important;
+            }
+
+            /* Foto utama di atas */
+            .mobile-only-layout .flip-card {
+                width: 240px !important; 
+                height: 300px !important;
+                margin: 0 auto 15px auto !important;
+            }
+
+            /* Tombol Add to Favorites Putih di bawah foto */
+            .mobile-only-layout label.fav-container {
+                padding: 10px 24px !important;
+                margin: 0 auto 25px auto !important;
+                width: 240px !important; /* Lebar disamakan dengan foto biar simetris */
+                box-sizing: border-box !important;
+                justify-content: center !important;
+            }
+
+            /* Nama Ican */
+            .mobile-only-layout h2 {
+                font-size: 2.5em !important;
+                margin: 0 0 20px 0 !important;
+                font-weight: 700 !important;
+                text-align: center !important;
+                width: 100% !important;
+                background: linear-gradient(to right, #ffffff, #a855f7) !important;
+                -webkit-background-clip: text !important;
+                background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+            }
+
+            /* ===================================================
+               🔥 GRID UTAMA: TOMBOL KIRI & PARAGRAF KANAN 🔥
+               =================================================== */
+            .mobile-content-grid {
+                display: grid !important;
+                grid-template-columns: auto 1fr !important; /* Kolom 1: Kiri (Tombol), Kolom 2: Kanan (Teks) */
+                gap: 16px !important;
+                width: 100% !important;
+                align-items: start !important;
+                margin-bottom: 25px !important;
+            }
+
+            /* Kolom Kiri: Gabungan Home & EN/ID secara vertikal */
+            .mobile-left-controls {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 12px !important; /* Jarak vertikal tombol Home ke EN/ID */
+                padding-top: 2px !important;
+            }
+
+            /* Tombol Home Bulat Lingkaran Gelap */
             .mobile-only-layout .btn-home {
-                width: 38px;
-                height: 38px;
-                padding: 0;
-                border-radius: 50%;
-                background: #16161a;
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                flex-shrink: 0;
+                width: 42px !important;
+                height: 42px !important;
+                padding: 0 !important;
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                border-radius: 50% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
             
             .mobile-only-layout .btn-home svg {
-                width: 16px;
-                height: 16px;
+                width: 18px !important;
+                height: 18px !important;
             }
 
-            /* Tombol Explore Imut & Kecil */
-            .mobile-only-layout .btn-cv {
-                padding: 8px 14px; 
-                font-size: 0.74em; 
-                border-radius: 20px;
-                white-space: nowrap; 
-                flex-shrink: 0;
-            }
-
-            /* 6. Tombol Bahasa Rata Kiri Sejajar di Bawah Tombol Home */
+            /* Tombol Bahasa EN/ID Tepat Di Bawah Tombol Home */
             .mobile-only-layout .lang-container {
-                display: flex !important;
-                width: 100%;
-                justify-content: flex-start !important; 
-                margin-top: 4px;
-                padding-left: 2px;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
             }
 
             .mobile-only-layout .btn-lang {
-                background: #16161a;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                color: #9ca3af;
-                padding: 6px 14px;
-                border-radius: 15px;
-                font-size: 0.72em;
-                font-weight: 600;
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                color: #a3a3a3 !important;
+                padding: 6px 10px !important;
+                border-radius: 12px !important;
+                font-size: 0.65em !important;
+                font-weight: 600 !important;
+                white-space: nowrap !important;
+            }
+
+            /* Kolom Kanan: Paragraf Rapi Kotak Justify Sesuai Gambar */
+            .mobile-only-layout p {
+                font-size: 11.5px !important;
+                line-height: 1.75 !important;
+                text-align: justify !important; 
+                text-justify: inter-word !important;
+                color: #9ca3af !important;
+                margin: 0 !important; 
+                padding: 0 !important;
+                letter-spacing: 0.1px !important;
+                width: 100% !important;
+            }
+
+            /* ===================================================
+               🚀 SEJAJAR: BOTTOM ACTION BUTTONS EXPLORE 🚀
+               =================================================== */
+            /* Tombol explore diletakkan di bawah grid, lebar disesuaikan pas dengan panjang teks */
+            .mobile-only-layout .btn-wrapper {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                gap: 10px !important;
+                width: 100% !important;
+                padding-left: 58px !important; /* Dorong ke kanan biar sejajar mulus dengan awal mulainya teks paragraf */
+                box-sizing: border-box !important;
+            }
+
+            .mobile-only-layout .btn-cv {
+                flex: 1 !important; /* Membuat kedua tombol explore membagi ruang sama rata */
+                padding: 10px 8px !important; 
+                font-size: 0.72em !important; 
+                border-radius: 25px !important;
+                white-space: nowrap !important; 
+                text-align: center !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-weight: 600 !important;
             }
         }
     </style>
@@ -458,11 +495,6 @@
 
     <div class="transition-overlay"></div>
 
-    <h1 class="page-title">About Me</h1>
-
-    <!-- ==========================================
-         💻 DESKTOP LAYOUT (LAPTOP)
-         ========================================== -->
     <div class="main-container">
         <div class="about-content">
             <span class="badge">Personal Portfolio</span>
@@ -514,12 +546,10 @@
     </div>
 
 
-    <!-- ==========================================
-         📲 MOBILE LAYOUT (100% MATCH FIGMA PROTO)
-         ========================================== -->
     <div class="mobile-only-layout">
         
-        <!-- 1. Foto Atas -->
+        <div class="mobile-page-title">About Me</div>
+
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -531,7 +561,6 @@
             </div>
         </div>
 
-        <!-- 2. Tombol Fav Putih -->
         <input type="checkbox" id="favorite-mobile" class="fav-input" name="favorite-checkbox">
         <label for="favorite-mobile" class="fav-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -541,31 +570,33 @@
             </div>
         </label>
 
-        <!-- 3. Nama -->
         <h2>Ican</h2>
 
-        <!-- 4. Teks Deskripsi (Rapi Kotak Justify Sesuai Prototype) -->
-        <div class="lang-en">
-            <p>Hello! I am Muhammad Ikhsan Akbar, a Management Informatics student at Politeknik Negeri Sriwijaya. Since my background is in IT, I’m dedicated to leveling up my skills in programming, business analysis, and English.</p>
-            <p>This website was built as my first platform to put what I've learned into practice. Moving forward, I look forward to growing further, boosting my work efficiency, and honing my skills for the future.</p>
-        </div>
-        <div class="lang-id">
-            <p>Halo! Saya Muhammad Ikhsan Akbar, seorang mahasiswa program studi Manajemen Informatika di Politeknik Negeri Sriwijaya. Sebagai mahasiswa yang berbasis IT, saya terus berupaya meningkatkan skill dalam programming, analisis kebutuhan bisnis, dan bahasa Inggris.</p>
-            <p>Website ini dibuat sebagai wadah perdana untuk mengaplikasikan hal yang saya pelajari dalam beberapa waktu. Seiring berjalannya waktu, saya berharap dapat terus berkembang, meningkatkan efisiensi kerja, dan mengasah kemampuan saya untuk ke depannya.</p>
+        <div class="mobile-content-grid">
+            
+            <div class="mobile-left-controls">
+                <a href="index.html" class="btn-home">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                <div class="lang-container">
+                    <button class="btn-lang classLangToggle">EN / ID</button>
+                </div>
+            </div>
+
+            <div class="mobile-right-text">
+                <div class="lang-en">
+                    <p>Hello! I am Muhammad Ikhsan Akbar, a Management Informatics student at Politeknik Negeri Sriwijaya. Since my background is in IT, I’m dedicated to leveling up my skills in programming, business analysis, and English.<br><br>This website was built as my first platform to put what I've learned into practice. Moving forward, I look forward to growing further, boosting my work efficiency, and honing my skills for the future.</p>
+                </div>
+                <div class="lang-id">
+                    <p>Halo! Saya Muhammad Ikhsan Akbar, seorang mahasiswa program studi Manajemen Informatika di Politeknik Negeri Sriwijaya. Sebagai mahasiswa yang berbasis IT, saya terus berupaya meningkatkan skill dalam programming, analisis kebutuhan bisnis, dan bahasa Inggris.<br><br>Website ini dibuat sebagai wadah perdana untuk mengaplikasikan hal yang saya pelajari dalam beberapa waktu. Seiring berjalannya waktu, saya berharap dapat terus berkembang, meningkatkan efisiensi kerja, dan mengasah kemampuan saya untuk ke depannya.</p>
+                </div>
+            </div>
+
         </div>
 
-        <!-- 5. Tiga Navigasi Sejajar -->
         <div class="btn-wrapper">
-            <a href="index.html" class="btn-home">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            </a>
             <a href="journey.html" class="btn-cv">Explore My Journey</a>
             <a href="experience.html" class="btn-cv">Explore My Experience</a>
-        </div>
-
-        <!-- 6. Tombol Bahasa Rata Kiri -->
-        <div class="lang-container">
-            <button class="btn-lang classLangToggle">EN / ID</button>
         </div>
 
     </div>
