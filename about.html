@@ -6,7 +6,7 @@
     <title>About Me</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -30,9 +30,9 @@
             left: -10%;
             width: 400px;
             height: 400px;
-            background: rgba(59, 130, 246, 0.12); 
+            background: rgba(168, 85, 247, 0.10); 
             border-radius: 50%;
-            filter: blur(100px);
+            filter: blur(140px);
             z-index: -1;
         }
         body::after {
@@ -42,9 +42,9 @@
             right: -5%;
             width: 450px;
             height: 450px;
-            background: rgba(168, 85, 247, 0.12); 
+            background: rgba(168, 85, 247, 0.10); 
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(140px);
             z-index: -1;
         }
 
@@ -79,17 +79,17 @@
             100% { transform: translateY(0); }
         }
 
-        .page-title {
+       .page-title {
             text-align: center;
-            font-size: 2.5em;
-            font-weight: 700;
+            font-size: 56px;          /* dari 2.5em -> disamain dengan Journey */
+            font-weight: 800;
+            letter-spacing: -0.5px;    /* samain dengan Journey */
             margin-bottom: 20px;
-            background: #ffffff;
+            background: linear-gradient(90deg, #ffffff 40%, #a855f7 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         /* ====== LOGIKAL TOGGLE BAHASA (DESKTOP & MOBILE) ====== */
         .lang-id { display: none !important; }
         .lang-en { display: block !important; }
@@ -401,40 +401,46 @@
             .mobile-only-layout p {
                 font-size: 11px !important;
                 line-height: 1.7 !important;
-                text-align: center;
+                text-align: left;
                 max-width: 320px;
                 color: #9ca3af;
                 margin: 0 auto 15px auto;
             }
 
-            /* 6. Buttons Rows Alignment - STAYS SIDE BY SIDE */
+/* 6. TOMBOL - selebar paragraf (320px), 2 tombol sama besar */
             .mobile-only-layout .btn-wrapper {
                 display: flex !important;
-                flex-direction: row !important; 
-                justify-content: center !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
                 align-items: center !important;
                 flex-wrap: nowrap !important;
                 gap: 8px !important;
                 margin: 20px auto !important;
                 width: 100%;
+                max-width: 320px;          /* <- disamain sama lebar paragraf */
+                box-sizing: border-box;
             }
 
             .mobile-only-layout .btn-home {
-                padding: 10px 14px;
-                flex-shrink: 0;
+                flex: 0 0 auto;            /* home ukuran tetap, nempel di kiri */
+                padding: 10px 12px;
             }
 
             .mobile-only-layout .btn-cv {
-                padding: 10px 14px;
-                font-size: 0.78em;
-                white-space: nowrap; 
-                flex-shrink: 0;
+                flex: 1 1 0;              /* dua tombol bagi-rata sisa lebar -> sama besar */
+                min-width: 0;
+                padding: 10px 6px;
+                font-size: 0.6em;         /* dikecilin biar muat & mirip Figma */
+                text-align: center;
+                line-height: 1.3;
             }
 
-            /* 7. Language Switcher at the very bottom */
+            /* 7. Language Switcher - kiri bawah, sejajar tombol home */
             .mobile-only-layout .lang-container {
-                justify-content: center;
-                margin-top: 10px;
+                justify-content: flex-start;   /* dorong tombol ke kiri */
+                width: 100%;
+                max-width: 320px;              /* selebar paragraf & baris tombol */
+                margin: 10px auto 0 auto;       /* kotaknya ketengah, isinya kiri */
             }
         }
     </style>
