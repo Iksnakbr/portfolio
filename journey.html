@@ -1,178 +1,97 @@
-
-    <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="globals.css">
-<link rel="stylesheet" href="styleguide.css">
-<link rel="stylesheet" href="style.css">
-
+<meta charset="utf-8"/>
+<title>Journey</title>
 <style>
-    @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Poppins:wght@600;700&display=swap');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Poppins:wght@600;700&display=swap');
+
 * {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-html,
-body {
-  margin: 0px;
+html, body {
+  margin: 0;
   height: 100%;
+  overflow-x: hidden;
 }
-/* a blue color as a generic focus style */
 button:focus-visible {
   outline: 2px solid #4a90e2 !important;
-  outline: -webkit-focus-ring-color auto 5px !important;
 }
 a {
   text-decoration: none;
 }
 
+/* ── Vars ── */
 :root {
-  --m3-elevation-light-2:
-    0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-  --m3-state-layers-surface-tint-opacity-08: rgba(103, 80, 164, 0.08);
+  --m3-elevation-light-2: 0px 2px 6px 2px rgba(0,0,0,0.15), 0px 1px 2px 0px rgba(0,0,0,0.3);
+  --card-bg: rgba(208, 188, 255, 0.08);
 }
 
-/*
-
-To enable a theme in your HTML, simply add one of the following data attributes to an HTML element, like so:
-
-<body data-m3-mode="light">
-    <!-- the rest of your content -->
-</body>
-
-You can apply the theme on any DOM node, not just the `body`
-
-*/
-
-[data-m3-mode="light"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(103, 80, 164, 0.08);
+/* ── Page transition overlay ── */
+.transition-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background: #0f0f11;
+  z-index: 99999;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+body.is-loading .transition-overlay {
+  animation: revealPage 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.transition-overlay.is-active {
+  animation: coverPage 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards !important;
+}
+@keyframes revealPage {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+@keyframes coverPage {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
 }
 
-[data-m3-mode="light-high-contrast"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(101, 85, 143, 0.08);
+/* ── Language toggle ── */
+.lang-id { display: none !important; }
+.lang-en { display: block !important; }
+body.lang-indo .lang-id { display: block !important; }
+body.lang-indo .lang-en { display: none !important; }
+
+/* ══════════════════════════════════════════
+   DESKTOP  (≥ 769px)
+══════════════════════════════════════════ */
+body {
+  background: #000000;
+  position: relative;
 }
 
-[data-m3-mode="light-medium-contrast"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(101, 85, 143, 0.08);
+/* Glow kiri atas */
+body::before {
+  content: '';
+  position: fixed;
+  top: 30px; left: -130px;
+  width: 500px; height: 500px;
+  background: rgba(168, 85, 247, 0.10);
+  border-radius: 50%;
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 0;
 }
-
-[data-m3-mode="dark"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(208, 188, 255, 0.08);
-}
-
-[data-m3-mode="dark-high-contrast"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(207, 189, 254, 0.08);
-}
-
-[data-m3-mode="dark-medium-contrast"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(207, 189, 254, 0.08);
-}
-
-[data-m3-mode="monochrome-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(159, 159, 159, 0.08);
-}
-
-[data-m3-mode="monochrome-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(232, 232, 232, 0.08);
-}
-
-[data-m3-mode="pink-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(138, 75, 104, 0.08);
-}
-
-[data-m3-mode="pink-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(254, 176, 209, 0.08);
-}
-
-[data-m3-mode="rose-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(143, 74, 86, 0.08);
-}
-
-[data-m3-mode="rose-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(255, 178, 189, 0.08);
-}
-
-[data-m3-mode="red-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(145, 75, 67, 0.08);
-}
-
-[data-m3-mode="red-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(255, 167, 155, 0.08);
-}
-
-[data-m3-mode="orange-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(141, 79, 40, 0.08);
-}
-
-[data-m3-mode="orange-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(255, 182, 140, 0.08);
-}
-
-[data-m3-mode="yellow-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(121, 90, 12, 0.08);
-}
-
-[data-m3-mode="yellow-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(233, 193, 108, 0.08);
-}
-
-[data-m3-mode="chartreuse-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(92, 100, 30, 0.08);
-}
-
-[data-m3-mode="chartreuse-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(195, 205, 124, 0.08);
-}
-
-[data-m3-mode="green-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(55, 106, 62, 0.08);
-}
-
-[data-m3-mode="green-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(156, 212, 159, 0.08);
-}
-
-[data-m3-mode="teal-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(0, 107, 96, 0.08);
-}
-
-[data-m3-mode="teal-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(130, 213, 199, 0.08);
-}
-
-[data-m3-mode="cyan-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(1, 104, 125, 0.08);
-}
-
-[data-m3-mode="cyan-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(134, 209, 234, 0.08);
-}
-
-[data-m3-mode="blue-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(72, 94, 146, 0.08);
-}
-
-[data-m3-mode="blue-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(176, 198, 255, 0.08);
-}
-
-[data-m3-mode="indigo-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(91, 89, 146, 0.08);
-}
-
-[data-m3-mode="indigo-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(197, 192, 255, 0.08);
-}
-
-[data-m3-mode="purple-LT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(107, 84, 141, 0.08);
-}
-
-[data-m3-mode="purple-DT"] {
-  --m3-state-layers-surface-tint-opacity-08: rgba(214, 187, 251, 0.08);
+/* Glow kanan bawah */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -150px; right: -100px;
+  width: 550px; height: 550px;
+  background: rgba(168, 85, 247, 0.10);
+  border-radius: 50%;
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .desktop {
@@ -182,527 +101,175 @@ You can apply the theme on any DOM node, not just the `body`
   min-height: 980px;
   width: 100%;
   position: relative;
+  z-index: 1;
 }
 
 .desktop .heading-ican {
   position: absolute;
+  top: 54px; left: 600px;
   width: calc(100% - 1200px);
-  top: 54px;
-  left: 600px;
   height: 79px;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 1) 40%,
-    rgba(168, 85, 247, 1) 100%
-  );
-  -webkit-background-clip: text !important;
+  background: linear-gradient(90deg, rgba(255,255,255,1) 40%, rgba(168,85,247,1) 100%);
+  -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  color: transparent;
   font-size: 56px;
   letter-spacing: -0.5px;
-  line-height: 95.2px;
   white-space: nowrap;
 }
 
-.desktop .overlay-blur {
+/* Kartu section — garis ungu tipis pemisah */
+.desktop .section-line {
   position: absolute;
-  width: -23.12%;
-  height: 83.40%;
-  top: 16.60%;
-  left: 123.12%;
-}
-
-.desktop .img {
-  position: absolute;
-  width: 29.24%;
-  height: 47.12%;
-  top: 52.88%;
-  left: 70.76%;
-}
-
-.desktop .overlay-blur-2 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.desktop .rich-tooltip {
-  display: flex;
-  flex-direction: column;
+  left: 175px;
   width: 1096px;
   height: 6px;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 0px 0px 8px;
-  position: absolute;
-  top: 641px;
-  left: 176px;
   background-color: #a855f74c;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--m3-elevation-light-2);
 }
+.desktop .section-line-h { top: 169px; }
+.desktop .section-line-m { top: 404px; }
+.desktop .section-line-b { top: 641px; }
 
-.desktop .actions {
+/* Kartu section — box background */
+.desktop .section-box {
+  position: absolute;
+  left: 175px;
+  width: 1096px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--m3-elevation-light-2);
+}
+.desktop .section-box-1 { top: 169px; height: 233px; }
+.desktop .section-box-2 { top: 407px; height: 233px; }
+.desktop .section-box-3 { top: 641px; height: 233px; }
+
+/* Teks konten */
+.desktop .entry-title {
+  position: absolute;
+  left: 217px;
+  height: 25px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0px 4px;
-  align-self: stretch;
-  flex: 0 0 auto;
-  margin-bottom: -8px;
-  width: 100%;
-  position: relative;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 20px;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
 }
+.desktop .entry-title-1 { top: 199px; }
+.desktop .entry-title-2 { top: 423px; }
+.desktop .entry-title-3 { top: 674px; }
 
-.desktop .div {
+.desktop .entry-period {
+  position: absolute;
+  left: 219px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #8a8a9e;
+  font-size: 16px;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+.desktop .entry-period-1 { top: 233px; }
+.desktop .entry-period-2 { top: 457px; }
+.desktop .entry-period-3 { top: 708px; }
+
+.desktop .entry-desc {
+  position: absolute;
+  left: 217px;
+  width: calc(100% - 412px);
+  display: flex;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #8a8a9e;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+.desktop .entry-desc-1 { top: 250px; height: 107px; }
+.desktop .entry-desc-2 { top: 479px; height: 148px; }
+.desktop .entry-desc-3 { top: 738px; height: 60px; }
+
+/* Tombol bawah desktop */
+.btn-wrapper-journey {
+  position: absolute;
+  top: 900px; left: 160px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 9999;
+}
+.btn-wrapper-journey .btn-home {
   display: inline-flex;
-  height: 40px;
   align-items: center;
   justify-content: center;
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.desktop .rich-tooltip-2 {
-  width: 699px;
-  height: 6px;
-  top: 522px;
-  left: -178px;
-  background-color: #a855f74c;
-  transform: rotate(-89.91deg);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 0px 0px 8px;
-  position: absolute;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--m3-elevation-light-2);
-}
-
-.desktop .rich-tooltip-3 {
-  width: 1096px;
-  height: 233px;
-  top: 169px;
-  left: 175px;
-  background-color: var(--m3-state-layers-surface-tint-opacity-08);
-  transform: rotate(-0.17deg);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 0px 0px 8px;
-  position: absolute;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--m3-elevation-light-2);
-}
-
-.desktop .actions-2 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0px 4px;
-  position: relative;
-  align-self: stretch;
-  width: 100%;
-  flex: 0 0 auto;
-}
-
-.desktop .text-wrapper {
-  width: calc(100% - 1254px);
-  top: 199px;
-  left: 222px;
-  height: 25px;
-font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 20px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-2 {
-  width: calc(100% - 1260px);
-  top: 194px;
-  left: 219px;
-  height: 25px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 1) 40%,
-    rgba(168, 85, 247, 1) 100%
-  );
-  -webkit-background-clip: text !important;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: transparent;
-  font-size: 14px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-3 {
-  width: calc(100% - 1290px);
-  top: 233px;
-  left: 219px;
-  height: 17px;
- font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #8a8a9e;
-  font-size: 16px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .p {
-  width: calc(100% - 407px);
-  top: 250px;
-  left: 222px;
-  height: 107px;
-  font-family: "Poppins", sans-serif;
+  padding: 12px 18px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  border-radius: 30px;
   font-weight: 600;
-  color: #8a8a9e;
-  font-size: 15px;
-  line-height: 20px;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .rich-tooltip-4 {
-  width: 1096px;
-  height: 6px;
-  top: 404px;
-  left: 175px;
-  background-color: #a855f74c;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 0px 0px 8px;
-  position: absolute;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--m3-elevation-light-2);
-}
-
-.desktop .rich-tooltip-5 {
-  width: 1096px;
-  height: 233px;
-  top: 407px;
-  left: 176px;
-  background-color: var(--m3-state-layers-surface-tint-opacity-08);
-  transform: rotate(-0.17deg);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 0px 0px 8px;
-  position: absolute;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--m3-elevation-light-2);
-}
-
-.desktop .rich-tooltip-6 {
-  width: 1096px;
-  height: 233px;
-  top: 641px;
-  left: 174px;
-  background-color: var(--m3-state-layers-surface-tint-opacity-08);
-  transform: rotate(-0.17deg);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 0px 0px 8px;
-  position: absolute;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--m3-elevation-light-2);
-}
-
-.desktop .heading-ican-4 {
-  width: calc(100% - 1216px);
-  top: 423px;
-  left: 217px;
-  height: 25px;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 20px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-5 {
-  width: calc(100% - 1290px);
-  top: 457px;
-  left: 217px;
-  height: 17px;
- font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #8a8a9e;
-  font-size: 16px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-6 {
-  width: calc(100% - 412px);
-  top: 479px;
-  left: 217px;
-  height: 148px;
- font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  color: #8a8a9e;
-  font-size: 15px;
-  line-height: 20px;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-7 {
-  width: calc(100% - 1174px);
-  top: 674px;
-  left: 217px;
-  height: 25px;
- font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 20px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-8 {
-  width: calc(100% - 1155px);
-  top: 708px;
-  left: 216px;
-  height: 17px;
- font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #8a8a9e;
-  font-size: 16px;
-  line-height: 95.2px;
-  white-space: nowrap;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-.desktop .heading-ican-9 {
-  width: calc(100% - 407px);
-  top: 738px;
-  left: 217px;
-  height: 60px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  color: #8a8a9e;
-  font-size: 15px;
-  line-height: 20px;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.5px;
-}
-
-/* 1. EFEK DI SEBELAH KIRI (HALUS & REDUP) */
-.desktop::before {
-    content: '';
-    position: absolute;
-    top: 30px;          /* Posisinya di tengah agak ke kiri */
-    left: -130px;        /* Digeser ke luar kiri biar gak terlalu nengah */
-    width: 500px;
-    height: 500px;
-    background: rgba(168, 85, 247, 0.10); /* Diubah jadi 0.15 biar redup halus, gak terang pisan */
-    border-radius: 50%;
-    filter: blur(140px);
-    pointer-events: none;
-}
-
-/* 2. EFEK DI UJUNG KANAN BAWAH (HALUS & REDUP) */
-.desktop::after {
-    content: '';
-    position: absolute;
-    bottom: -150px;      /* Pas di ujung bawah */
-    right: -100px;       /* Pas di ujung kanan */
-    width: 550px;
-    height: 550px;
-    background: rgba(168, 85, 247, 0.10); /* Redup dan gak lebay ungunya */
-    border-radius: 50%;
-    filter: blur(140px);
-    pointer-events: none;
-}
-
-body {
-    background: #000000; /* Latar belakang hitam polos */
-    position: relative;
-    overflow-x: hidden;
-}
-
-.btn-wrapper-journey {
-    position: absolute;
-    top: 900px;          /* 🟢 DIUBAH KE 830px biar masuk kembali ke dalam layar 980px */
-    left: 160px;         /* 🟢 DIUBAH KE 217px biar sejajar lurus vertikal sama teks cerita di atasnya */
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 9999;       /* Tetap jaga biar di lapisan paling atas */
-}
-
-/* 2. Style Tombol Home Icon (Comot dari about.html) */
-.btn-wrapper-journey .btn-home {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 18px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 .btn-wrapper-journey .btn-home:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.2);
 }
-
-/* 3. Style Tombol Explore Text (Comot dari about.html) */
 .btn-wrapper-journey .btn-cv {
-    font-family: "Poppins", sans-serif;
-    display: inline-block;
-    padding: 12px 24px;
-    background: #ffffff;
-    color: #000000;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 0.95em;
-    transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  display: inline-block;
+  padding: 12px 24px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95em;
+  transition: all 0.3s ease;
 }
 .btn-wrapper-journey .btn-cv:hover {
-    transform: translateY(-3px);
-    background: #a855f7;
-    color: #ffffff;
+  transform: translateY(-3px);
+  background: #a855f7;
+  color: #ffffff;
 }
-
-/* 4. Style Tombol Bahasa EN/ID (Comot dari about.html) */
 .btn-wrapper-journey .btn-lang {
-    font-family: "Poppins", sans-serif;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #9ca3af;
-    padding: 11px 20px;
-    border-radius: 20px;
-    font-size: 0.85em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #9ca3af;
+  padding: 11px 20px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 .btn-wrapper-journey .btn-lang:hover {
-    background: rgba(168, 85, 247, 0.2);
-    color: #ffffff;
-}
-.transition-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #0f0f11;
-    z-index: 99999;            /* TETAP 99999, jangan diturunin ke 9999 — biar tetap nutupin tombol journey */
-    pointer-events: none;
-    transform: translateY(-100%);
+  background: rgba(168,85,247,0.2);
+  color: #ffffff;
 }
 
-/* Tirai BUKA pas halaman ke-load (turun keluar ke bawah) */
-body.is-loading .transition-overlay {
-    animation: revealPage 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-
-/* Tirai NUTUP pas pindah halaman (turun dari atas — sama kayak about) */
-.transition-overlay.is-active {
-    animation: coverPage 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards !important;
-}
-
-@keyframes revealPage {
-    0%   { transform: translateY(0); }
-    100% { transform: translateY(100%); }
-}
-
-@keyframes coverPage {
-    0%   { transform: translateY(-100%); }
-    100% { transform: translateY(0); }
-}
-/* ====== TOGGLE BAHASA (EN / ID) ====== */
-.lang-id { display: none !important; }
-.lang-en { display: block !important; }
-
-body.lang-indo .lang-id { display: block !important; }
-body.lang-indo .lang-en { display: none !important; }
-
-/* ============================================================ */
-/* ====================  TAMPILAN MOBILE  ===================== */
-/* ====================   (≤ 768px)        ===================== */
-/* ============================================================ */
-
-/* Default (layar besar): versi mobile disembunyikan */
+/* ══════════════════════════════════════════
+   MOBILE  (≤ 768px)
+══════════════════════════════════════════ */
 .mobile-journey { display: none; }
 
 @media (max-width: 768px) {
-
-  /* Sembunyikan versi desktop, tampilkan versi mobile */
   .desktop { display: none !important; }
   .mobile-journey { display: block !important; }
 
-  /* Cegah scroll horizontal di HP */
-  html, body { width: 100%; overflow-x: hidden; }
-
-  /* ---- Wadah utama mobile ---- */
   .mobile-journey {
     position: relative;
     width: 100%;
@@ -712,15 +279,12 @@ body.lang-indo .lang-en { display: none !important; }
     overflow: hidden;
   }
 
-  /* Glow ungu halus (atas-kiri & bawah-kanan) — sama seperti desktop */
   .mobile-journey::before {
     content: '';
     position: absolute;
-    top: -70px;
-    left: -110px;
-    width: 320px;
-    height: 320px;
-    background: rgba(168, 85, 247, 0.13);
+    top: -70px; left: -110px;
+    width: 320px; height: 320px;
+    background: rgba(168,85,247,0.13);
     border-radius: 50%;
     filter: blur(110px);
     pointer-events: none;
@@ -729,18 +293,15 @@ body.lang-indo .lang-en { display: none !important; }
   .mobile-journey::after {
     content: '';
     position: absolute;
-    bottom: 20px;
-    right: -120px;
-    width: 320px;
-    height: 320px;
-    background: rgba(168, 85, 247, 0.10);
+    bottom: 20px; right: -120px;
+    width: 320px; height: 320px;
+    background: rgba(168,85,247,0.10);
     border-radius: 50%;
     filter: blur(120px);
     pointer-events: none;
     z-index: 0;
   }
 
-  /* ---- Judul "Journey" (gradient) ---- */
   .mobile-journey .mj-title {
     position: relative;
     z-index: 1;
@@ -752,18 +313,12 @@ body.lang-indo .lang-en { display: none !important; }
     font-size: clamp(40px, 13vw, 56px);
     letter-spacing: -0.5px;
     line-height: 1.1;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 1) 40%,
-      rgba(168, 85, 247, 1) 100%
-    );
+    background: linear-gradient(90deg, rgba(255,255,255,1) 40%, rgba(168,85,247,1) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
   }
 
-  /* ---- Kartu timeline ---- */
   .mobile-journey .mj-card {
     position: relative;
     z-index: 1;
@@ -771,13 +326,10 @@ body.lang-indo .lang-en { display: none !important; }
     max-width: 460px;
     margin: 0 auto 22px;
     padding: 22px 20px;
-    background: rgba(208, 188, 255, 0.08);
-    border: 1px solid rgba(168, 85, 247, 0.18);
+    background: rgba(208,188,255,0.08);
+    border: 1px solid rgba(168,85,247,0.18);
     border-radius: 14px;
-    box-shadow:
-      0px 2px 6px 2px rgba(0, 0, 0, 0.15),
-      0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-    /* animasi muncul halus */
+    box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.15), 0px 1px 2px 0px rgba(0,0,0,0.3);
     opacity: 0;
     transform: translateY(18px);
     animation: mjFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -786,14 +338,12 @@ body.lang-indo .lang-en { display: none !important; }
   .mobile-journey .mj-card:nth-of-type(2) { animation-delay: 0.28s; }
   .mobile-journey .mj-card:nth-of-type(3) { animation-delay: 0.41s; }
 
-  /* Aksen ungu kecil di pojok atas kartu */
+  /* Aksen garis ungu tipis di atas kartu */
   .mobile-journey .mj-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 20px;
-    width: 46px;
-    height: 4px;
+    top: 0; left: 20px;
+    width: 46px; height: 4px;
     background: #a855f7;
     border-radius: 0 0 6px 6px;
   }
@@ -807,7 +357,6 @@ body.lang-indo .lang-en { display: none !important; }
     color: #ffffff;
     line-height: 1.3;
   }
-
   .mobile-journey .mj-card-period {
     margin: 0 0 12px;
     font-family: "Inter", sans-serif;
@@ -816,7 +365,6 @@ body.lang-indo .lang-en { display: none !important; }
     letter-spacing: -0.3px;
     color: #8a8a9e;
   }
-
   .mobile-journey .mj-card-desc {
     margin: 0;
     font-family: "Poppins", sans-serif;
@@ -831,43 +379,35 @@ body.lang-indo .lang-en { display: none !important; }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ====== Tombol-tombol bawah (meniru persis tata letak about.html) ====== */
-  /* Baris tombol: Home + 2 Explore dalam SATU baris, selebar kartu */
+  /* Baris tombol */
   .mobile-journey .mj-btn-wrapper {
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
     gap: 8px;
     width: 88%;
     max-width: 460px;
     margin: 30px auto 0;
-    box-sizing: border-box;
   }
-
-  /* Home: ukuran tetap, nempel di kiri */
   .mobile-journey .btn-home {
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
     color: #ffffff;
-    text-decoration: none;
     border-radius: 30px;
     transition: all 0.3s ease;
   }
   .mobile-journey .btn-home:hover {
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,0.2);
   }
-
-  /* Dua tombol Explore: bagi rata sisa lebar -> ukuran sama besar */
   .mobile-journey .btn-cv {
     flex: 1 1 0;
     min-width: 0;
@@ -876,7 +416,6 @@ body.lang-indo .lang-en { display: none !important; }
     padding: 10px 6px;
     background: #ffffff;
     color: #000000;
-    text-decoration: none;
     border-radius: 30px;
     font-weight: 600;
     font-size: 0.6em;
@@ -889,19 +428,18 @@ body.lang-indo .lang-en { display: none !important; }
     color: #ffffff;
   }
 
-  /* Tombol Bahasa EN/ID: baris sendiri di bawah, rata kiri (sejajar kartu) */
+  /* EN/ID baris sendiri */
   .mobile-journey .mj-lang-container {
     display: flex;
     justify-content: flex-start;
     width: 88%;
     max-width: 460px;
     margin: 12px auto 0;
-    box-sizing: border-box;
   }
   .mobile-journey .btn-lang {
     font-family: "Poppins", sans-serif;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
     color: #9ca3af;
     padding: 8px 16px;
     border-radius: 20px;
@@ -911,149 +449,151 @@ body.lang-indo .lang-en { display: none !important; }
     transition: all 0.3s ease;
   }
   .mobile-journey .btn-lang:hover {
-    background: rgba(168, 85, 247, 0.2);
+    background: rgba(168,85,247,0.2);
     color: #ffffff;
   }
 }
-
 </style>
 </head>
 <body class="is-loading">
-    <div class="transition-overlay"></div>
+<div class="transition-overlay"></div>
 
-    <div class="desktop">
-<div class="desktop" ><div class="heading-ican" >Journey</div>
-<div class="rich-tooltip" ><div class="actions" ><div class="div" ></div>
-<div class="div" ></div></div></div>
-<div class="rich-tooltip-2" ><div class="actions" ><div class="div" ></div>
-<div class="div" ></div></div></div>
-<div class="rich-tooltip-3" ><div class="actions-2" ><div class="div" ></div>
-<div class="div" ></div></div></div>
-<div class="text-wrapper" >MTsN 2 Palembang</div>
-<div class="heading-ican-3"><span class="lang-en">● 2020 – 2023</span><span class="lang-id">● 2020 - 2023</span></div>
-<p class="p"><span class="lang-en">I started at MTsN 2 Palembang in 2020, right when the pandemic chaos hit. Online classes were a mess for me, and my grades definitely suffered while I was finding my feet. Things got better once we were finally back on school later that year. It’s a super strict school, which was a huge wake-up call for me. I learned a lot about discipline, even if I still found myself breaking the rules from time to time </span><span class="lang-id">Saya melanjutkan pendidikan di MTsN 2 Palembang pada tahun 2020, pas awal-awal pandemi COVID-19. Karena situasi itu, sekolah sempat mengadakan 'Belajar Daring' yang jujur bikin pencapaian akademik saya menurun karena proses adaptasi. Tapi akhir tahun, sekolah sudah kembali mengadakan kelas tatap muka. Menjadi bagian dari sekolah unggulan dengan peraturan ketat ini memberikan saya pelajaran untuk menaati aturan sekolah, walapun masih sering melanggar aturan.</span></p>
-<div class="rich-tooltip-4" ><div class="actions" ><div class="div" ></div>
-<div class="div" ></div></div></div>
-<div class="rich-tooltip-5" ><div class="actions-2" ><div class="div" ></div>
-<div class="div" ></div></div></div>
-<div class="rich-tooltip-6" ><div class="actions-2" ><div class="div" ></div>
-<div class="div" ></div></div></div>
-<div class="heading-ican-4" >Ponpes Aulia Cendekia</div>
-<div class="heading-ican-5"><span class="lang-en">● 2023 - 2026</span><span class="lang-id">● 2023 - 2026</span></div>
-<p class="heading-ican-6"><span class="lang-en">After that, I continued my studies at a boarding school in Palembang under the guidance of KH. Hendra Zainuddin Al-Qodiri. Those two years, I got to meet all sorts of people, got super active in organizations and event planning, and, best of all, I finally got my grades and academic performance back on track. For my final year, I asked my parents if I could switch to being a day student.  I made this decision so I could focus on chasing my dream of studying Informatics. I met some amazing classmates who taught me so much about life, and I spent the rest of my time going all in on my studies for the UTBK entrance exam to get into my dream university. Looking back, whether it was dorm life or commuting, both experiences taught me lessons I’ll never forget.</span><span class="lang-id">Setelah itu, saya melanjutkan sekolah di salah satu ponpes di Kota Palembang yang dinaungi oleh KH. Hendra Zainuddin Al-Qodiri. Selama dua tahun jadi santri di sini, saya dapat banyak banget pelajaran berharga, mulai dari ketemu orang dengan berbagai karakter, aktif berorganisasi, akrab jadi panitia acara, dan bisa mengembalikan performa akademik dan prestasi saya menjadi lebih baik. Namun, di tahun terakhir, saya minta ke orang tua untuk keluar dari asrama dan lanjut sebagai siswa PP (Pulang Pergi). Keputusan ini saya ambil demi fokus mengejar mimpi kuliah di jurusan Informatika. Di tahun terakhir ini juga saya ketemu teman-teman kelas yang baik banget dan sering berbagi pelajaran hidup. Di akhir masa sekolah, saya pun mulai berjuang belajar UTBK demi tembus PTN impian. Tapi bagi saya, mau jadi santri pondok ataupun siswa PP, keduanya tetap memberikan pelajaran yang luar biasa berharga.</span></p>
-<div class="heading-ican-7" >Politeknik Negeri Sriwijaya</div>
-<p class="heading-ican-8"><span class="lang-en">D4 Informatics Management | 2026</span><span class="lang-id">D4 Manajemen Informatika | 2026</span></p>
-<p class="heading-ican-9"><span class="lang-en">Alhamdulillah, I got into Politeknik Negeri Sriwijaya through UTBK/SNBT with an average score of 554.71. I’ve been into informatics and the IT world since I was a kid,and it’s a blessing that I can study here. I’m going to improve my academics, sharpen my skills,  and build relationships at here.</span><span class="lang-id">Alhamdulillah, saya diterima di Politeknik Negeri Sriwijaya dari jalur UTBK/SNBT, dengan rata-rata skor 554,71. memang sudah dari kecil tertarik untuk kuliah informatika dan mengenal dunia IT, sekarang rezeki saya bisa belajar disini. Saya akan terus meningkatkan kualitas belajar, skill, dan relasi dengan baik disini.</span></p>
+<!-- ══════════════════════════════════════════
+     DESKTOP
+══════════════════════════════════════════ -->
+<div class="desktop">
 
-<div class="btn-wrapper-journey">
-        <a href="index.html" class="btn-home">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        </a>
-        <a href="about.html" class="btn-cv">Explore About Me</a>
-        <a href="experience.html" class="btn-cv">Explore My Experience</a>
-        <button class="btn-lang classLangToggle">EN / ID</button>
-    </div>
+  <div class="heading-ican">Journey</div>
+
+  <!-- Garis & box section 1: MTsN -->
+  <div class="section-line section-line-h"></div>
+  <div class="section-box section-box-1"></div>
+  <div class="entry-title entry-title-1">MTsN 2 Palembang</div>
+  <div class="entry-period entry-period-1">
+    <span class="lang-en">● 2020 – 2023</span>
+    <span class="lang-id">● 2020 - 2023</span>
+  </div>
+  <p class="entry-desc entry-desc-1">
+    <span class="lang-en">I started at MTsN 2 Palembang in 2020, right when the pandemic chaos hit. Online classes were a mess for me, and my grades definitely suffered while I was finding my feet. Things got better once we were finally back on school later that year. It's a super strict school, which was a huge wake-up call for me. I learned a lot about discipline, even if I still found myself breaking the rules from time to time.</span>
+    <span class="lang-id">Saya melanjutkan pendidikan di MTsN 2 Palembang pada tahun 2020, pas awal-awal pandemi COVID-19. Karena situasi itu, sekolah sempat mengadakan 'Belajar Daring' yang jujur bikin pencapaian akademik saya menurun karena proses adaptasi. Tapi akhir tahun, sekolah sudah kembali mengadakan kelas tatap muka. Menjadi bagian dari sekolah unggulan dengan peraturan ketat ini memberikan saya pelajaran untuk menaati aturan sekolah, walapun masih sering melanggar aturan.</span>
+  </p>
+
+  <!-- Garis & box section 2: Ponpes -->
+  <div class="section-line section-line-m"></div>
+  <div class="section-box section-box-2"></div>
+  <div class="entry-title entry-title-2">Ponpes Aulia Cendekia</div>
+  <div class="entry-period entry-period-2">
+    <span class="lang-en">● 2023 - 2026</span>
+    <span class="lang-id">● 2023 - 2026</span>
+  </div>
+  <p class="entry-desc entry-desc-2">
+    <span class="lang-en">After that, I continued my studies at a boarding school in Palembang under the guidance of KH. Hendra Zainuddin Al-Qodiri. Those two years, I got to meet all sorts of people, got super active in organizations and event planning, and, best of all, I finally got my grades and academic performance back on track. For my final year, I asked my parents if I could switch to being a day student. I made this decision so I could focus on chasing my dream of studying Informatics. I met some amazing classmates who taught me so much about life, and I spent the rest of my time going all in on my studies for the UTBK entrance exam. Looking back, whether it was dorm life or commuting, both experiences taught me lessons I'll never forget.</span>
+    <span class="lang-id">Setelah itu, saya melanjutkan sekolah di salah satu ponpes di Kota Palembang yang dinaungi oleh KH. Hendra Zainuddin Al-Qodiri. Selama dua tahun jadi santri di sini, saya dapat banyak banget pelajaran berharga, mulai dari ketemu orang dengan berbagai karakter, aktif berorganisasi, akrab jadi panitia acara, dan bisa mengembalikan performa akademik dan prestasi saya menjadi lebih baik. Namun, di tahun terakhir, saya minta ke orang tua untuk keluar dari asrama dan lanjut sebagai siswa PP (Pulang Pergi). Keputusan ini saya ambil demi fokus mengejar mimpi kuliah di jurusan Informatika. Tapi bagi saya, mau jadi santri pondok ataupun siswa PP, keduanya tetap memberikan pelajaran yang luar biasa berharga.</span>
+  </p>
+
+  <!-- Garis & box section 3: Polsri -->
+  <div class="section-line section-line-b"></div>
+  <div class="section-box section-box-3"></div>
+  <div class="entry-title entry-title-3">Politeknik Negeri Sriwijaya</div>
+  <div class="entry-period entry-period-3">
+    <span class="lang-en">D4 Informatics Management | 2026</span>
+    <span class="lang-id">D4 Manajemen Informatika | 2026</span>
+  </div>
+  <p class="entry-desc entry-desc-3">
+    <span class="lang-en">Alhamdulillah, I got into Politeknik Negeri Sriwijaya through UTBK/SNBT with an average score of 554.71. I've been into informatics and the IT world since I was a kid, and it's a blessing that I can study here. I'm going to improve my academics, sharpen my skills, and build relationships here.</span>
+    <span class="lang-id">Alhamdulillah, saya diterima di Politeknik Negeri Sriwijaya dari jalur UTBK/SNBT, dengan rata-rata skor 554,71. Memang sudah dari kecil tertarik untuk kuliah informatika dan mengenal dunia IT, sekarang rezeki saya bisa belajar disini. Saya akan terus meningkatkan kualitas belajar, skill, dan relasi dengan baik disini.</span>
+  </p>
+
+  <!-- Tombol bawah -->
+  <div class="btn-wrapper-journey">
+    <a href="index.html" class="btn-home" aria-label="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <a href="about.html" class="btn-cv">Explore About Me</a>
+    <a href="experience.html" class="btn-cv">Explore My Experience</a>
+    <button class="btn-lang classLangToggle">EN / ID</button>
+  </div>
+
 </div>
-</div>
 
-<!-- ============================================================ -->
-<!-- =======================  VERSI MOBILE  ===================== -->
-<!-- ============================================================ -->
-<main class="mobile-journey" data-m3-mode="dark">
+<!-- ══════════════════════════════════════════
+     MOBILE
+══════════════════════════════════════════ -->
+<main class="mobile-journey">
 
-    <h1 class="mj-title">Journey</h1>
+  <h1 class="mj-title">Journey</h1>
 
-    <!-- Kartu 1: MTsN 2 Palembang -->
-    <div class="mj-card">
-        <h2 class="mj-card-title">MTsN 2 Palembang</h2>
-        <p class="mj-card-period">
-            <span class="lang-en">● 2020 – 2023</span>
-            <span class="lang-id">● 2020 - 2023</span>
-        </p>
-        <p class="mj-card-desc">
-            <span class="lang-en">I started at MTsN 2 Palembang in 2020, right when the pandemic chaos hit. Online classes were a mess for me, and my grades definitely suffered while I was finding my feet. Things got better once we were finally back on school later that year. It’s a super strict school, which was a huge wake-up call for me. I learned a lot about discipline, even if I still found myself breaking the rules from time to time</span>
-            <span class="lang-id">Saya melanjutkan pendidikan di MTsN 2 Palembang pada tahun 2020, pas awal-awal pandemi COVID-19. Karena situasi itu, sekolah sempat mengadakan 'Belajar Daring' yang jujur bikin pencapaian akademik saya menurun karena proses adaptasi. Tapi akhir tahun, sekolah sudah kembali mengadakan kelas tatap muka. Menjadi bagian dari sekolah unggulan dengan peraturan ketat ini memberikan saya pelajaran untuk menaati aturan sekolah, walapun masih sering melanggar aturan.</span>
-        </p>
-    </div>
+  <div class="mj-card">
+    <h2 class="mj-card-title">MTsN 2 Palembang</h2>
+    <p class="mj-card-period">
+      <span class="lang-en">● 2020 – 2023</span>
+      <span class="lang-id">● 2020 - 2023</span>
+    </p>
+    <p class="mj-card-desc">
+      <span class="lang-en">I started at MTsN 2 Palembang in 2020, right when the pandemic chaos hit. Online classes were a mess for me, and my grades definitely suffered while I was finding my feet. Things got better once we were finally back on school later that year. It's a super strict school, which was a huge wake-up call for me. I learned a lot about discipline, even if I still found myself breaking the rules from time to time.</span>
+      <span class="lang-id">Saya melanjutkan pendidikan di MTsN 2 Palembang pada tahun 2020, pas awal-awal pandemi COVID-19. Karena situasi itu, sekolah sempat mengadakan 'Belajar Daring' yang jujur bikin pencapaian akademik saya menurun karena proses adaptasi. Tapi akhir tahun, sekolah sudah kembali mengadakan kelas tatap muka. Menjadi bagian dari sekolah unggulan dengan peraturan ketat ini memberikan saya pelajaran untuk menaati aturan sekolah, walapun masih sering melanggar aturan.</span>
+    </p>
+  </div>
 
-    <!-- Kartu 2: Ponpes Aulia Cendekia -->
-    <div class="mj-card">
-        <h2 class="mj-card-title">Ponpes Aulia Cendekia</h2>
-        <p class="mj-card-period">
-            <span class="lang-en">● 2023 - 2026</span>
-            <span class="lang-id">● 2023 - 2026</span>
-        </p>
-        <p class="mj-card-desc">
-            <span class="lang-en">After that, I continued my studies at a boarding school in Palembang under the guidance of KH. Hendra Zainuddin Al-Qodiri. Those two years, I got to meet all sorts of people, got super active in organizations and event planning, and, best of all, I finally got my grades and academic performance back on track. For my final year, I asked my parents if I could switch to being a day student. I made this decision so I could focus on chasing my dream of studying Informatics. I met some amazing classmates who taught me so much about life, and I spent the rest of my time going all in on my studies for the UTBK entrance exam to get into my dream university. Looking back, whether it was dorm life or commuting, both experiences taught me lessons I’ll never forget.</span>
-            <span class="lang-id">Setelah itu, saya melanjutkan sekolah di salah satu ponpes di Kota Palembang yang dinaungi oleh KH. Hendra Zainuddin Al-Qodiri. Selama dua tahun jadi santri di sini, saya dapat banyak banget pelajaran berharga, mulai dari ketemu orang dengan berbagai karakter, aktif berorganisasi, akrab jadi panitia acara, dan bisa mengembalikan performa akademik dan prestasi saya menjadi lebih baik. Namun, di tahun terakhir, saya minta ke orang tua untuk keluar dari asrama dan lanjut sebagai siswa PP (Pulang Pergi). Keputusan ini saya ambil demi fokus mengejar mimpi kuliah di jurusan Informatika. Di tahun terakhir ini juga saya ketemu teman-teman kelas yang baik banget dan sering berbagi pelajaran hidup. Di akhir masa sekolah, saya pun mulai berjuang belajar UTBK demi tembus PTN impian. Tapi bagi saya, mau jadi santri pondok ataupun siswa PP, keduanya tetap memberikan pelajaran yang luar biasa berharga.</span>
-        </p>
-    </div>
+  <div class="mj-card">
+    <h2 class="mj-card-title">Ponpes Aulia Cendekia</h2>
+    <p class="mj-card-period">
+      <span class="lang-en">● 2023 - 2026</span>
+      <span class="lang-id">● 2023 - 2026</span>
+    </p>
+    <p class="mj-card-desc">
+      <span class="lang-en">After that, I continued my studies at a boarding school in Palembang under the guidance of KH. Hendra Zainuddin Al-Qodiri. Those two years, I got to meet all sorts of people, got super active in organizations and event planning, and, best of all, I finally got my grades and academic performance back on track. For my final year, I asked my parents if I could switch to being a day student. I made this decision so I could focus on chasing my dream of studying Informatics. I met some amazing classmates who taught me so much about life, and I spent the rest of my time going all in on my studies for the UTBK entrance exam. Looking back, whether it was dorm life or commuting, both experiences taught me lessons I'll never forget.</span>
+      <span class="lang-id">Setelah itu, saya melanjutkan sekolah di salah satu ponpes di Kota Palembang yang dinaungi oleh KH. Hendra Zainuddin Al-Qodiri. Selama dua tahun jadi santri di sini, saya dapat banyak banget pelajaran berharga, mulai dari ketemu orang dengan berbagai karakter, aktif berorganisasi, akrab jadi panitia acara, dan bisa mengembalikan performa akademik dan prestasi saya menjadi lebih baik. Namun, di tahun terakhir, saya minta ke orang tua untuk keluar dari asrama dan lanjut sebagai siswa PP (Pulang Pergi). Keputusan ini saya ambil demi fokus mengejar mimpi kuliah di jurusan Informatika. Tapi bagi saya, mau jadi santri pondok ataupun siswa PP, keduanya tetap memberikan pelajaran yang luar biasa berharga.</span>
+    </p>
+  </div>
 
-    <!-- Kartu 3: Politeknik Negeri Sriwijaya -->
-    <div class="mj-card">
-        <h2 class="mj-card-title">Politeknik Negeri Sriwijaya</h2>
-        <p class="mj-card-period">
-            <span class="lang-en">D4 Informatics Management | 2026</span>
-            <span class="lang-id">D4 Manajemen Informatika | 2026</span>
-        </p>
-        <p class="mj-card-desc">
-            <span class="lang-en">Alhamdulillah, I got into Politeknik Negeri Sriwijaya through UTBK/SNBT with an average score of 554.71. I’ve been into informatics and the IT world since I was a kid, and it’s a blessing that I can study here. I’m going to improve my academics, sharpen my skills, and build relationships at here.</span>
-            <span class="lang-id">Alhamdulillah, saya diterima di Politeknik Negeri Sriwijaya dari jalur UTBK/SNBT, dengan rata-rata skor 554,71. memang sudah dari kecil tertarik untuk kuliah informatika dan mengenal dunia IT, sekarang rezeki saya bisa belajar disini. Saya akan terus meningkatkan kualitas belajar, skill, dan relasi dengan baik disini.</span>
-        </p>
-    </div>
+  <div class="mj-card">
+    <h2 class="mj-card-title">Politeknik Negeri Sriwijaya</h2>
+    <p class="mj-card-period">
+      <span class="lang-en">D4 Informatics Management | 2026</span>
+      <span class="lang-id">D4 Manajemen Informatika | 2026</span>
+    </p>
+    <p class="mj-card-desc">
+      <span class="lang-en">Alhamdulillah, I got into Politeknik Negeri Sriwijaya through UTBK/SNBT with an average score of 554.71. I've been into informatics and the IT world since I was a kid, and it's a blessing that I can study here. I'm going to improve my academics, sharpen my skills, and build relationships here.</span>
+      <span class="lang-id">Alhamdulillah, saya diterima di Politeknik Negeri Sriwijaya dari jalur UTBK/SNBT, dengan rata-rata skor 554,71. Memang sudah dari kecil tertarik untuk kuliah informatika dan mengenal dunia IT, sekarang rezeki saya bisa belajar disini. Saya akan terus meningkatkan kualitas belajar, skill, dan relasi dengan baik disini.</span>
+    </p>
+  </div>
 
-    <!-- Baris tombol: Home + 2 Explore (sama seperti about.html) -->
-    <div class="mj-btn-wrapper">
-        <a href="index.html" class="btn-home" aria-label="Home">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        </a>
-        <a href="about.html" class="btn-cv">Explore About Me</a>
-        <a href="experience.html" class="btn-cv">Explore My Experience</a>
-    </div>
+  <div class="mj-btn-wrapper">
+    <a href="index.html" class="btn-home" aria-label="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <a href="about.html" class="btn-cv">Explore About Me</a>
+    <a href="experience.html" class="btn-cv">Explore My Experience</a>
+  </div>
 
-    <!-- Tombol bahasa EN/ID: baris sendiri di bawah, rata kiri -->
-    <div class="mj-lang-container">
-        <button class="btn-lang classLangToggle">EN / ID</button>
-    </div>
+  <div class="mj-lang-container">
+    <button class="btn-lang classLangToggle">EN / ID</button>
+  </div>
 
 </main>
 
 <script>
-     const overlay = document.querySelector('.transition-overlay');
+  const overlay = document.querySelector('.transition-overlay');
 
-   // FUNGSI GANTI BAHASA
-const toggles = document.querySelectorAll('.classLangToggle');
-toggles.forEach(btn => {
-    btn.addEventListener('click', function() {
-        document.body.classList.toggle('lang-indo');
+  document.querySelectorAll('.classLangToggle').forEach(btn => {
+    btn.addEventListener('click', () => document.body.classList.toggle('lang-indo'));
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => document.body.classList.remove('is-loading'), 600);
+  });
+
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      if (this.hostname === window.location.hostname && this.getAttribute('href') && this.getAttribute('href').includes('.html')) {
+        e.preventDefault();
+        const targetUrl = this.href;
+        overlay.classList.add('is-active');
+        setTimeout(() => { window.location.href = targetUrl; }, 600);
+      }
     });
-});
-
-
-    // 2. FUNGSI BUKA TIRAI PAS HALAMAN KE-LOAD
-    // 2. FUNGSI BUKA TIRAI PAS HALAMAN KE-LOAD
-    window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            document.body.classList.remove('is-loading');
-        }, 600);
-    });
-
-    // 3. FUNGSI NUTUP TIRAI PAS KLIK LINK (TETEP BISA PINDAH HALAMAN)
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Pastikan link internal
-            if (this.hostname === window.location.hostname && this.getAttribute('href') && this.getAttribute('href').includes('.html')) {
-                e.preventDefault();
-                const targetUrl = this.href;
-                
-               overlay.classList.add('is-active'); // Tirai nutup (turun dari atas)
-                
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 600); // Tunggu tirai nutup dulu
-            }
-        });
-    });
-    </script>
+  });
+</script>
 </body>
 </html>
